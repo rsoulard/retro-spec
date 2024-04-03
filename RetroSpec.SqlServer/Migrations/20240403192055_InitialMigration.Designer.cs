@@ -12,7 +12,7 @@ using RetroSpec.Infrastructure.DataAccess;
 namespace RetroSpec.SqlServer.Migrations
 {
     [DbContext(typeof(RetroDbContext))]
-    [Migration("20240403171507_InitialMigration")]
+    [Migration("20240403192055_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

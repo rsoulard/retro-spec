@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RetroSpec.Api;
 using RetroSpec.Infrastructure.Abstractions;
 using RetroSpec.Infrastructure.Extensions;
 using System.Reflection;
@@ -8,10 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRetroSpec()
     .AddDatabase(databaseOptions =>
     {
-        databaseOptions.UseSqlServer(builder.Configuration.GetConnectionString("RetroSpec"), sqlServerOptions =>
+        var provider = builder.Configuration.GetValue("DatabaseProvider", MigrationProvider.SqlServer.providerName);
+
+        if (provider == MigrationProvider.SqlServer.providerName)
         {
-            sqlServerOptions.MigrationsAssembly(typeof(RetroSpec.SqlServer.MigrationMarker).Assembly.GetName().Name);
-        });
+            databaseOptions.UseSqlServer(builder.Configuration.GetConnectionString("RetroSpec"), sqlServerOptions =>
+            {
+                sqlServerOptions.MigrationsAssembly(MigrationProvider.SqlServer.migrationAssemblyName);
+            });
+        }
     })
     .AddBoards();
 
