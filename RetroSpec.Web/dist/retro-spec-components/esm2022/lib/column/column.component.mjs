@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+import * as i0 from "@angular/core";
+export class ColumnComponent {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: ColumnComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "17.3.2", type: ColumnComponent, isStandalone: true, selector: "retro-column", ngImport: i0, template: "<div class=\"rounded-lg bg-slate-300 h-full max-w-80\">\r\n  <p>Hello?</p>\r\n</div>\r\n", styles: [""] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.2", ngImport: i0, type: ColumnComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'retro-column', standalone: true, imports: [], template: "<div class=\"rounded-lg bg-slate-300 h-full max-w-80\">\r\n  <p>Hello?</p>\r\n</div>\r\n" }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29sdW1uLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL3JldHJvLXNwZWMtY29tcG9uZW50cy9zcmMvbGliL2NvbHVtbi9jb2x1bW4uY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvcmV0cm8tc3BlYy1jb21wb25lbnRzL3NyYy9saWIvY29sdW1uL2NvbHVtbi5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLE1BQU0sZUFBZSxDQUFDOztBQVMxQyxNQUFNLE9BQU8sZUFBZTs4R0FBZixlQUFlO2tHQUFmLGVBQWUsd0VDVDVCLDBGQUdBOzsyRkRNYSxlQUFlO2tCQVAzQixTQUFTOytCQUNFLGNBQWMsY0FDWixJQUFJLFdBQ1AsRUFBRSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5cclxuQENvbXBvbmVudCh7XHJcbiAgc2VsZWN0b3I6ICdyZXRyby1jb2x1bW4nLFxyXG4gIHN0YW5kYWxvbmU6IHRydWUsXHJcbiAgaW1wb3J0czogW10sXHJcbiAgdGVtcGxhdGVVcmw6ICcuL2NvbHVtbi5jb21wb25lbnQuaHRtbCcsXHJcbiAgc3R5bGVVcmw6ICcuL2NvbHVtbi5jb21wb25lbnQuY3NzJ1xyXG59KVxyXG5leHBvcnQgY2xhc3MgQ29sdW1uQ29tcG9uZW50IHtcclxuXHJcbn1cclxuIiwiPGRpdiBjbGFzcz1cInJvdW5kZWQtbGcgYmctc2xhdGUtMzAwIGgtZnVsbCBtYXgtdy04MFwiPlxyXG4gIDxwPkhlbGxvPzwvcD5cclxuPC9kaXY+XHJcbiJdfQ==

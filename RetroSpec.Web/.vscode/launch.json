@@ -5,8 +5,8 @@
     {
       "name": "ng serve",
       "type": "chrome",
-      "request": "launch",
       "preLaunchTask": "npm: start",
+      "request": "launch",
       "url": "http://localhost:4200/"
     },
     {
