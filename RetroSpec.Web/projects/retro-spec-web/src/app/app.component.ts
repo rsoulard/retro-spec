@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CardComponent, ColumnComponent } from 'retro-spec-components';
+import { CardComponent, ColumnComponent, ButtonComponent} from 'retro-spec-components';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +8,16 @@ import { CardComponent, ColumnComponent } from 'retro-spec-components';
   imports: [
     RouterOutlet,
     CardComponent,
-    ColumnComponent
+    ColumnComponent,
+    ButtonComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'retro-spec-web';
+
+  protected handleClick() {
+    console.log("Mean");
+  }
 }

@@ -110,9 +110,9 @@ import {
   ɵɵinject,
   ɵɵinjectAttribute,
   ɵɵstyleProp
-} from "./chunk-DQYUO5H6.js";
+} from "./chunk-YVWIMTHM.js";
 
-// ../../node_modules/@angular/common/fesm2022/common.mjs
+// node_modules/@angular/common/fesm2022/common.mjs
 var _DOM = null;
 function getDOM() {
   return _DOM;
@@ -4895,7 +4895,7 @@ function booleanOrDataUrlAttribute(value) {
   return booleanAttribute(value);
 }
 
-// ../../node_modules/@angular/common/fesm2022/http.mjs
+// node_modules/@angular/common/fesm2022/http.mjs
 var HttpHandler = class {
 };
 var HttpBackend = class {
@@ -7052,7 +7052,7 @@ function appendMissingHeadersDetection(url, headers, headersToInclude) {
   });
 }
 
-// ../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs
+// node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs
 var GenericBrowserDomAdapter = class extends DomAdapter {
   constructor() {
     super(...arguments);
@@ -8895,4 +8895,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-HSARJVF4.js.map
+//# sourceMappingURL=chunk-6RID3OEN.js.map
