@@ -393,13 +393,14 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Compiled output
-dist
-tmp
-out-tsc
-bazel-out
+RetroSpec.Web/dist
+RetroSpec.Web/tmp
+RetroSpec.Web/out-tsc
+RetroSpec.Web/bazel-out
 
 # Node
-node_modules
+RetroSpec.Web/node_modules
+RetroSpec.Web/projects/retro-spec-components/node_modules
 npm-debug.log
 yarn-error.log
 
@@ -421,7 +422,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-.angular/cache
+RetroSpec.Web/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
