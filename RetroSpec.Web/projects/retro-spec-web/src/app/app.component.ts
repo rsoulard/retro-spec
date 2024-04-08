@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CardComponent, ColumnComponent, ButtonComponent} from 'retro-spec-components';
+import { CardComponent, ColumnComponent, ButtonComponent, IconComponent} from 'retro-spec-components';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,8 @@ import { CardComponent, ColumnComponent, ButtonComponent} from 'retro-spec-compo
     RouterOutlet,
     CardComponent,
     ColumnComponent,
-    ButtonComponent
+    ButtonComponent,
+    IconComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

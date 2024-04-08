@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "cd ./projects/retro-spec-components && ng build && npx tailwindcss -c ./tailwind.config.js -o ../../dist/retro-spec-components/assets/styles.css && cd ../.. && ng build retro-spec-web",
+    "build": "cd ./projects/retro-spec-components && ng build && npx tailwindcss -c ./tailwind.config.js -i ./src/styles.css -o ../../dist/retro-spec-components/assets/styles.css && cd ../.. && ng build retro-spec-web",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
