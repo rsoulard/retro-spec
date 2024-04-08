@@ -393,7 +393,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Compiled output
-RetroSpec.Web/dist
+RetroSpec.Web/dist/**/*
 RetroSpec.Web/tmp
 RetroSpec.Web/out-tsc
 RetroSpec.Web/bazel-out
