@@ -12,6 +12,6 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class ButtonComponent {
   iconName = input<string | null>(null);
-  title = input<string>();
+  title = input<string | null>(null);
   onClick = input<(event: MouseEvent | null) => void>(() => { });
 }

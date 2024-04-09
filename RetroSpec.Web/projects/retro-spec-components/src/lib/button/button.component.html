@@ -1,8 +1,10 @@
-<button class="text-md leading-none rounded-lg text-white bg-violet-600 hover:bg-violet-700 py-2 px-5" (click)="onClick()($event)">
+<button class="block text-md leading-none rounded-lg text-white bg-violet-600 hover:bg-violet-700 py-2 px-3" (click)="onClick()($event)">
   <div class="flex items-center">
     @if (iconName() !== null) {
-    <retro-icon [name]="iconName()!" />
+      <retro-icon class="icon" [name]="iconName()!" />
     }
-    <span class="font-semibold ms-2">{{title()}}</span>
+    @if (title() !== null) {
+      <span class="text font-semibold leading-6">{{title()}}</span>
+    }
   </div>
 </button>
