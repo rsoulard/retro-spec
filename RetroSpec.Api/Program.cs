@@ -4,6 +4,8 @@ using RetroSpec.Infrastructure.Abstractions;
 using RetroSpec.Infrastructure.Extensions;
 using System.Reflection;
 
+const string SpecifiedOriginsPolicyName = "SpecifiedOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRetroSpec()
@@ -20,6 +22,17 @@ builder.Services.AddRetroSpec()
         }
     })
     .AddBoards();
+
+builder.Services.AddCors(corsOptions =>
+{
+    corsOptions.AddPolicy(SpecifiedOriginsPolicyName, policyBuilder =>
+    {
+        policyBuilder.WithOrigins(builder.Configuration?.GetSection("AllowedOrigins").Get<string[]>() ?? throw new Exception("Allowed origins not specified for CORS."))
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
 
 builder.Services.AddRouting(routeOptions =>
 {
@@ -55,6 +68,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseCors(SpecifiedOriginsPolicyName);
+
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
