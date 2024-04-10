@@ -71,20 +71,12 @@ public class CardServiceTests
     [Test]
     public async Task FilterAsync_ValidInput_CallsRepository()
     {
-        var cardFilter = new CardFilterDTO
-        {
-            ColumnId = 0,
-            PageIndex = 0,
-            PageSize = 10
-        };
-
-        var result = await cardService.FilterAsync(testBoardId, cardFilter);
+        var result = await cardService.ListAsync(testBoardId);
 
         Assert.Multiple(() =>
         {
             cardQueryRepository.Received()
-                .QueryPageAsync(Arg.Any<Expression<Func<Card, bool>>>(), Arg.Is(10), Arg.Is(0));
-
+                .QueryAsync(Arg.Any<Expression<Func<Card, bool>>>());
         });
     }
 }

@@ -32,8 +32,8 @@ public class CardService(IUnitOfWork unitOfWork, ICardQueryRepository cardQueryR
         }
     }
 
-    public async Task<PaginatedCollection<CardDTO>> FilterAsync(Guid boardId, CardFilterDTO filter)
+    public async Task<IReadOnlyCollection<CardDTO>> ListAsync(Guid boardId)
     {
-        return await cardQueryRepository.QueryPageAsync(card => card.BoardId == boardId && card.ColumnId == filter.ColumnId, filter.PageSize, filter.PageIndex);
+        return await cardQueryRepository.QueryAsync(card => card.BoardId == boardId);
     }
 }

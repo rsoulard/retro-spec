@@ -1,14 +1,17 @@
 <div class="p-3">
   <div class="pb-6">
-    <h1 class="text-2xl font-bold">{{boardService.board()?.name}}</h1>
+    <h1 class="text-2xl font-bold">{{board()?.name}}</h1>
   </div>
   <div class="flex flex-row gap-4">
-    <retro-column title="Number 1">
-      <retro-card>This is a card in column 1</retro-card>
-      <retro-card>This is also a card in column 1</retro-card>
-    </retro-column>
-    <retro-column title="Number 2">
-      <retro-card>This is also a card but it is in column 2</retro-card>
-    </retro-column>
+    @for (column of board()?.columns; track column.id) {
+      <retro-column [title]="column.name">
+        @for (card of getCardsForColumn(column.id); track card.id)
+        {
+          <retro-card>
+            {{card.body}}
+          </retro-card>
+        }
+      </retro-column>
+    }
   </div>
 </div>

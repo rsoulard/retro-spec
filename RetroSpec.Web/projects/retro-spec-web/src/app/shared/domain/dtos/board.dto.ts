@@ -1,4 +1,7 @@
+import { ColumnDto } from "./column.dto";
+
 export interface BoardDto {
   id: string,
-  name: string
+  name: string,
+  columns: ReadonlySet<ColumnDto>
 }

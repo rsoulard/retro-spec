@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RetroSpec.Application.Abstractions;
 using RetroSpec.Application.DTOs;
-using RetroSpec.Application.Models;
 using RetroSpec.Core.CardModels;
 using RetroSpec.Infrastructure.DataAccess;
 using System.Linq.Expressions;
@@ -12,13 +11,11 @@ internal class CardQueryRepository(RetroDbContext retroDbContext) : ICardQueryRe
 {
     private readonly RetroDbContext retroDbContext = retroDbContext;
 
-    public async Task<PaginatedCollection<CardDTO>> QueryPageAsync(Expression<Func<Card, bool>> predicate, int pageSize, int pageIndex)
+    public async Task<IReadOnlyCollection<CardDTO>> QueryAsync(Expression<Func<Card, bool>> predicate)
     {
-        var result = await retroDbContext.Set<Card>()
+        return await retroDbContext.Set<Card>()
             .AsNoTracking()
             .Where(predicate)
-            .Skip(pageSize * pageIndex)
-            .Take(pageSize)
             .Select(card => new CardDTO
             {
                 Id = card.Id,
@@ -26,10 +23,5 @@ internal class CardQueryRepository(RetroDbContext retroDbContext) : ICardQueryRe
                 Body = card.Body
             })
             .ToListAsync();
-
-        var totalCount = await retroDbContext.Set<Card>()
-            .CountAsync();
-
-        return new(pageSize, pageIndex, totalCount, [.. result]);
     }
 }
