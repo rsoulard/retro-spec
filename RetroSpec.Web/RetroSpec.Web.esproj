@@ -7,7 +7,4 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\retro-spec-web\</BuildOutputFolder>
     <StartupCommand>npm start</StartupCommand>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="projects\retro-spec-components\src\lib\" />
-  </ItemGroup>
 </Project>
