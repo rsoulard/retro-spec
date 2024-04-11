@@ -4,6 +4,7 @@ import { BoardService } from '../../shared/domain/services/board.service';
 import { BoardDto } from '../../shared/domain/dtos/board.dto';
 import { CardDto } from '../../shared/domain/dtos/card.dto';
 import { CardService } from '../../shared/domain/services/card.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -22,15 +23,17 @@ export class BoardComponent implements OnInit{
   protected board = signal<BoardDto | undefined>(undefined);
   protected cards = signal <ReadonlyArray<CardDto>>([]);
 
-  constructor(private boardService: BoardService, private cardService: CardService) { }
+  constructor(private boardService: BoardService, private cardService: CardService, private route: ActivatedRoute) { }
 
   public ngOnInit() {
-    this.boardService.get('96c081f2-f98c-4bd5-98b6-310edd44c7b7')
+    const id = this.route.snapshot.paramMap.get('id')!;
+
+    this.boardService.get(id)
       .subscribe(response => {
         this.board.set(response);
       });
 
-    this.cardService.list('96c081f2-f98c-4bd5-98b6-310edd44c7b7')
+    this.cardService.list(id)
       .subscribe(respnse => {
         this.cards.set(respnse);
       });

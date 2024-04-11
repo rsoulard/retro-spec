@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using RetroSpec.Api;
 using RetroSpec.Infrastructure.Abstractions;
 using RetroSpec.Infrastructure.Extensions;
@@ -18,6 +19,18 @@ builder.Services.AddRetroSpec()
             databaseOptions.UseSqlServer(builder.Configuration.GetConnectionString("RetroSpec"), sqlServerOptions =>
             {
                 sqlServerOptions.MigrationsAssembly(MigrationProvider.SqlServer.migrationAssemblyName);
+            });
+        }
+
+        if (provider == MigrationProvider.MariaDb.providerName)
+        {
+            databaseOptions.UseMySql(
+                builder.Configuration.GetConnectionString("RetroSpec"), 
+                ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("RetroSpec")), 
+                mySqlOptions =>
+            {
+                mySqlOptions.MigrationsAssembly(MigrationProvider.MariaDb.migrationAssemblyName);
+                mySqlOptions.SchemaBehavior(MySqlSchemaBehavior.Ignore);
             });
         }
     })

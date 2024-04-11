@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroSpec.SqlServer", "Retr
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "RetroSpec.Web", "RetroSpec.Web\RetroSpec.Web.esproj", "{9F7A5D18-B94D-4E4E-AAD3-F4363928BC4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroSpec.MariaDb", "RetroSpec.MariaDb\RetroSpec.MariaDb.csproj", "{3415BB65-2C6B-40AB-B10A-CFFF3AFEE389}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,12 +57,17 @@ Global
 		{9F7A5D18-B94D-4E4E-AAD3-F4363928BC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F7A5D18-B94D-4E4E-AAD3-F4363928BC4E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F7A5D18-B94D-4E4E-AAD3-F4363928BC4E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3415BB65-2C6B-40AB-B10A-CFFF3AFEE389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3415BB65-2C6B-40AB-B10A-CFFF3AFEE389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3415BB65-2C6B-40AB-B10A-CFFF3AFEE389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3415BB65-2C6B-40AB-B10A-CFFF3AFEE389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ACBA79C3-CC64-49B0-B7DE-EA819B0DAE2E} = {C1C9D5A9-1953-4CCE-B0FB-C8BEADED9691}
+		{3415BB65-2C6B-40AB-B10A-CFFF3AFEE389} = {C1C9D5A9-1953-4CCE-B0FB-C8BEADED9691}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AED175C-3B8F-4DCC-8824-8FEBF015044E}

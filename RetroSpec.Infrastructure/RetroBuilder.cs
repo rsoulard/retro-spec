@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("RetroSpec.UnitTests")]
 [assembly: InternalsVisibleTo("RetroSpec.SqlServer")]
+[assembly: InternalsVisibleTo("RetroSpec.MariaDb")]
 namespace RetroSpec.Infrastructure;
 
 public class RetroBuilder

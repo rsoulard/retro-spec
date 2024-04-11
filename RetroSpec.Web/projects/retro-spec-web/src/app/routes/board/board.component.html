@@ -5,6 +5,7 @@
   <div class="flex flex-row gap-4">
     @for (column of board()?.columns; track column.id) {
       <retro-column [title]="column.name">
+        <retro-button iconName="add" title="New Card"></retro-button>
         @for (card of getCardsForColumn(column.id); track card.id)
         {
           <retro-card>
