@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
@@ -13,5 +13,10 @@ import { IconComponent } from '../icon/icon.component';
 export class ButtonComponent {
   iconName = input<string | null>(null);
   title = input<string | null>(null);
-  onClick = input<(event: MouseEvent | null) => void>(() => { });
+
+  @Output() onClick = new EventEmitter();
+
+  protected handleClick() {
+    this.onClick.emit();
+  }
 }
