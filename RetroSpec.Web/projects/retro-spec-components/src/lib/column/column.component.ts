@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'retro-column',
@@ -8,5 +8,4 @@ import { Component, input } from '@angular/core';
   styleUrl: './column.component.css'
 })
 export class ColumnComponent {
-  title = input.required<string>();
 }
