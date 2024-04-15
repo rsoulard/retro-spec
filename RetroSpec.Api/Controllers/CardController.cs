@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RetroSpec.Application.Abstractions;
 using RetroSpec.Application.DTOs;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace RetroSpec.Api.Controllers;
 
+[Authorize]
 [Route("api/board/{boardId:guid}/[controller]")]
 [ApiController]
 public class CardController(ICardService cardService) : ControllerBase
@@ -17,9 +19,9 @@ public class CardController(ICardService cardService) : ControllerBase
     /// <param name="boardId">The Id of the board to add to the card to.</param>
     /// <param name="newCard">Parameters for creating a card.</param>
     /// <returns>The newly created card.</returns>
-    [HttpPost]
     [SwaggerResponse(StatusCodes.Status201Created, "The card was created successfully.", typeof(CardDTO))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "One or more of the supplied arguments is invalid. See body for deatils.")]
+    [HttpPost]
     public async Task<IActionResult> CreateAsync(Guid boardId, [FromBody]CardCreateDTO newCard)
     {
         var result = await cardService.CreateAsync(boardId, newCard);

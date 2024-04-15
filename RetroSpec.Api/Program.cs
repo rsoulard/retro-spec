@@ -1,40 +1,28 @@
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using RetroSpec.Api;
+using RetroSpec.Api.Extensions;
 using RetroSpec.Infrastructure.Abstractions;
 using RetroSpec.Infrastructure.Extensions;
+using Serilog;
 using System.Reflection;
 
 const string SpecifiedOriginsPolicyName = "SpecifiedOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host
+    .UseSerilog((context, configuration) =>
+    {
+        configuration.ReadFrom.Configuration(context.Configuration);
+    });
+
 builder.Services.AddRetroSpec()
     .AddDatabase(databaseOptions =>
     {
-        var provider = builder.Configuration.GetValue("DatabaseProvider", MigrationProvider.SqlServer.providerName);
-
-        if (provider == MigrationProvider.SqlServer.providerName)
-        {
-            databaseOptions.UseSqlServer(builder.Configuration.GetConnectionString("RetroSpec"), sqlServerOptions =>
-            {
-                sqlServerOptions.MigrationsAssembly(MigrationProvider.SqlServer.migrationAssemblyName);
-            });
-        }
-
-        if (provider == MigrationProvider.MariaDb.providerName)
-        {
-            databaseOptions.UseMySql(
-                builder.Configuration.GetConnectionString("RetroSpec"), 
-                ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("RetroSpec")), 
-                mySqlOptions =>
-            {
-                mySqlOptions.MigrationsAssembly(MigrationProvider.MariaDb.migrationAssemblyName);
-                mySqlOptions.SchemaBehavior(MySqlSchemaBehavior.Ignore);
-            });
-        }
+        databaseOptions.AddDatabaseProvider(builder.Configuration.GetValue<string>("DatabaseProvider"), builder.Configuration.GetConnectionString("RetroSpec"));
     })
     .AddBoards();
+
+builder.Services.AddAuthenticationProvider();
 
 builder.Services.AddCors(corsOptions =>
 {
@@ -79,9 +67,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseCors(SpecifiedOriginsPolicyName);
 app.UseHttpsRedirection();
 app.UseAuthentication();
-app.UseCors(SpecifiedOriginsPolicyName);
+app.UseAuthorization();
+
+
+app.UseSerilogRequestLogging();
 
 app.MapControllers();
 

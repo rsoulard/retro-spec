@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { ColumnCreateDto } from '../dtos/column-create.dto';
 import { ColumnDto } from '../dtos/column.dto';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ColumnService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public create(boardId: string, newColumn: ColumnCreateDto) {
+  public create(boardId: string, newColumn: ColumnCreateDto) : Observable<ColumnDto> {
     return this.httpClient.post<ColumnDto>(`${this.baseUrl}/${boardId}${this.controllerUrl}`, newColumn);
   }
 }

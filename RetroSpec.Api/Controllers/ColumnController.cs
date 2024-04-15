@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RetroSpec.Application.Abstractions;
 using RetroSpec.Application.DTOs;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace RetroSpec.Api.Controllers;
 
+[Authorize]
 [Route("api/board/{boardId:guid}/[controller]")]
 [ApiController]
 public class ColumnController(IColumnService columnService) : ControllerBase
