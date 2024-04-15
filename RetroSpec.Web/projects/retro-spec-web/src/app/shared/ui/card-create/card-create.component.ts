@@ -23,6 +23,7 @@ export class CardCreateComponent {
   columnId = input.required<number>();
 
   onCreate = output<CardDto>();
+  onCancel = output();
 
   constructor(private formBuilder: FormBuilder, private cardService: CardService) {
     this.formRoot = formBuilder.group({
@@ -30,7 +31,7 @@ export class CardCreateComponent {
     });
   }
 
-  handleCreate() {
+  protected handleCreate() {
     const newCard: CardCreateDto = {
       columnId: this.columnId(),
       ...this.formRoot.value

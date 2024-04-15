@@ -5,7 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace RetroSpec.Api.Controllers;
 
-[Route("api/{boardId:guid}/[controller]")]
+[Route("api/board/{boardId:guid}/[controller]")]
 [ApiController]
 public class ColumnController(IColumnService columnService) : ControllerBase
 {

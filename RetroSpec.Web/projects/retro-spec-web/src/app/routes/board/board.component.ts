@@ -7,6 +7,8 @@ import { CardDto } from '../../shared/domain/dtos/card.dto';
 import { BoardService } from '../../shared/domain/services/board.service';
 import { CardService } from '../../shared/domain/services/card.service';
 import { CardCreateComponent } from '../../shared/ui/card-create/card-create.component';
+import { ColumnCreateComponent } from '../../shared/ui/column-create/column-create.component';
+import { ColumnDto } from '../../shared/domain/dtos/column.dto';
 
 @Component({
   selector: 'app-board',
@@ -16,7 +18,8 @@ import { CardCreateComponent } from '../../shared/ui/card-create/card-create.com
     ColumnComponent,
     ButtonComponent,
     IconComponent,
-    CardCreateComponent
+    CardCreateComponent,
+    ColumnCreateComponent
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css',
@@ -25,7 +28,8 @@ export class BoardComponent implements OnInit{
 
   protected board = signal<BoardDto | undefined>(undefined);
   protected cards = signal<ReadonlyArray<CardDto>>([]);
-  protected newCard = signal<CardCreateDto | undefined>(undefined);
+  protected newCardColumnId = signal<number | undefined>(undefined);
+  protected showNewColumnForm = signal<boolean>(false);
 
   constructor(private boardService: BoardService, private cardService: CardService, private route: ActivatedRoute) { }
 
@@ -54,12 +58,29 @@ export class BoardComponent implements OnInit{
     return this.cards().filter(card => card.columnId === columnId);
   }
 
-  protected showNewCardInColumn(columnId: number) {
-    this.newCard.set({ columnId, body: "" });
+  protected handleNewCard(columnId: number) {
+    this.newCardColumnId.set(columnId);
   }
 
   protected handleCardCreated(newCard: CardDto) {
-    this.newCard.set(undefined);
-    this.fetchCards(this.board()!.id);
+    this.newCardColumnId.set(undefined);
+    this.cards.set([...this.cards(), newCard]);
+  }
+
+  protected handleCardCreateCancelled() {
+    this.newCardColumnId.set(undefined);
+  }
+
+  protected handleNewColumn() {
+    this.showNewColumnForm.set(true);
+  }
+
+  protected handleColumnCreated(newColumn: ColumnDto) {
+    this.board.set({ ...this.board()!, columns: [...this.board()!.columns, newColumn] })
+    this.showNewColumnForm.set(false);
+  }
+
+  protected handleColumnCreateCancelled() {
+    this.showNewColumnForm.set(false);
   }
 }

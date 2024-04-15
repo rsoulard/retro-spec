@@ -9,15 +9,15 @@
         <h1 class="p-3 text-xl font-semibold">{{column.name}}</h1>
       </div>
 
-      @if (newCard()?.columnId == column.id)
+      @if (newCardColumnId() === column.id)
       {
-        <retro-card>
-          <app-card-create [boardId]="board()!.id" [columnId]="column.id" (onCreate)="handleCardCreated($event)"></app-card-create>
-        </retro-card>
+      <retro-card>
+        <app-card-create [boardId]="board()!.id" [columnId]="column.id" (onCreate)="handleCardCreated($event)" (onCancel)="handleCardCreateCancelled()"></app-card-create>
+      </retro-card>
       }
       @else
       {
-        <retro-button iconName="add" title="New Card" (onClick)="showNewCardInColumn(column.id)"></retro-button>
+      <retro-button iconName="add" title="New Card" (onClick)="handleNewCard(column.id)"></retro-button>
       }
 
       @for (card of getCardsForColumn(column.id); track card.id)
@@ -28,6 +28,16 @@
       }
     </retro-column>
     }
-        <retro-button iconName="add"></retro-button>
+
+    @if (showNewColumnForm())
+    {
+      <retro-column>
+        <app-column-create [boardId]="board()!.id" (onCreate)="handleColumnCreated($event)" (onCancel)="handleColumnCreateCancelled()"></app-column-create>
+      </retro-column>
+    }
+    @else
+    {
+      <retro-button iconName="add" (onClick)="handleNewColumn()"></retro-button>
+    }
   </div>
 </div>

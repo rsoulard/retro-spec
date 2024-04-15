@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-1 h-full">
-  <app-card-editor class="flex-grow" [form]="formRoot"></app-card-editor>
+  <app-column-editor class="flex-grow" [form]="formRoot"></app-column-editor>
   <div class="flex flex-row gap-1 w-hull">
     <retro-button class="basis-1/2" iconName="save" title="save" (onClick)="handleCreate()"></retro-button>
     <retro-button class="basis-1/2" iconName="close" title="cancel" (onClick)="onCancel.emit()"></retro-button>
