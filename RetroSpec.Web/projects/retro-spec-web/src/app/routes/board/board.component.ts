@@ -1,11 +1,12 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ButtonComponent, CardComponent, ColumnComponent, IconComponent, TextareaInputComponent } from 'retro-spec-components';
-import { BoardService } from '../../shared/domain/services/board.service';
-import { BoardDto } from '../../shared/domain/dtos/board.dto';
-import { CardDto } from '../../shared/domain/dtos/card.dto';
-import { CardService } from '../../shared/domain/services/card.service';
 import { ActivatedRoute } from '@angular/router';
+import { ButtonComponent, CardComponent, ColumnComponent, IconComponent } from 'retro-spec-components';
+import { BoardDto } from '../../shared/domain/dtos/board.dto';
 import { CardCreateDto } from '../../shared/domain/dtos/card-create.dto';
+import { CardDto } from '../../shared/domain/dtos/card.dto';
+import { BoardService } from '../../shared/domain/services/board.service';
+import { CardService } from '../../shared/domain/services/card.service';
+import { CardCreateComponent } from '../../shared/ui/card-create/card-create.component';
 
 @Component({
   selector: 'app-board',
@@ -15,7 +16,7 @@ import { CardCreateDto } from '../../shared/domain/dtos/card-create.dto';
     ColumnComponent,
     ButtonComponent,
     IconComponent,
-    TextareaInputComponent
+    CardCreateComponent
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css',
@@ -55,5 +56,10 @@ export class BoardComponent implements OnInit{
 
   protected showNewCardInColumn(columnId: number) {
     this.newCard.set({ columnId, body: "" });
+  }
+
+  protected handleCardCreated(newCard: CardDto) {
+    this.newCard.set(undefined);
+    this.fetchCards(this.board()!.id);
   }
 }
