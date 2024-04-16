@@ -1,6 +1,8 @@
 ﻿using RetroSpec.Application.Abstractions;
 using RetroSpec.Core.BoardModels;
 using RetroSpec.Core.CardModels;
+using RetroSpec.Core.OrganizationModels;
+using RetroSpec.Core.TeamModels;
 using RetroSpec.Infrastructure.DataAccess;
 
 namespace RetroSpec.Infrastructure.Repositories;
@@ -9,10 +11,14 @@ internal sealed class UnitOfWork(RetroDbContext dbContext) : IUnitOfWork, IDispo
 {
     private readonly RetroDbContext dbContext = dbContext;
 
+    private CommandRepository<Organization>? organizationRepository;
+    public ICommandRepository<Organization> OrganizationRepository => organizationRepository ??= new(dbContext);
+
+    private CommandRepository<Team>? teamRepository;
+    public ICommandRepository<Team> TeamRepository => teamRepository ??= new(dbContext);
 
     private CommandRepository<Board>? boardRepository;
     public ICommandRepository<Board> BoardRepository => boardRepository ??= new(dbContext);
-
 
     private CommandRepository<Card>? cardRepository;
     public ICommandRepository<Card> CardRepository => cardRepository ??= new(dbContext);

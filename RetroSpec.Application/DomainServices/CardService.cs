@@ -1,6 +1,5 @@
 ﻿using RetroSpec.Application.Abstractions;
 using RetroSpec.Application.DTOs;
-using RetroSpec.Application.Models;
 
 namespace RetroSpec.Application.DomainServices;
 

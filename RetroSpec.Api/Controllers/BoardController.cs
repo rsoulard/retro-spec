@@ -16,14 +16,15 @@ public class BoardController(IBoardService boardService) : ControllerBase
     /// <summary>
     /// Create a new board.
     /// </summary>
+    /// <param name="teamId">The team this board should be created for.</param>
     /// <param name="newBoard">Parameters for creating a board.</param>
     /// <returns>The newly created board.</returns>
     [SwaggerResponse(StatusCodes.Status201Created, "The board was created successfully.", typeof(BoardDTO))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "One or more of the supplied arguments is invalid. See body for deatils.")]
-    [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] BoardCreateDTO newBoard)
+    [HttpPost("/api/team/{teamId:guid}/[controller]")]
+    public async Task<IActionResult> CreateAsync(Guid teamId, [FromBody] BoardCreateDTO newBoard)
     {
-        var result = await boardService.CreateAsync(newBoard);
+        var result = await boardService.CreateAsync(teamId, newBoard);
         return Created(new Uri(result.Id.ToString(), UriKind.Relative), result);
     }
 

@@ -4,6 +4,7 @@ using RetroSpec.Application.DomainServices;
 using RetroSpec.Application.DTOs;
 using RetroSpec.Core.BoardModels;
 using RetroSpec.Core.CardModels;
+using RetroSpec.Core.OrganizationModels;
 using System.Linq.Expressions;
 
 namespace RetroSpec.UnitTests.Application;
@@ -21,14 +22,17 @@ public class CardServiceTests
     [SetUp]
     public void SetUp()
     {
-        var board = Board.Create("Test");
-        board.AddColumn("Test");
+        var organization = Organization.Create("Organization");
+        var team = organization.CreateTeam("Team");
+        var board = team.CreateBoard("Board");
+        board.AddColumn("Column1");
         testBoardId = board.Id;
 
-        cardCommandRepository = Substitute.For<ICommandRepository<Card>>();
         boardCommandRepository = Substitute.For<ICommandRepository<Board>>();
-        boardCommandRepository.FirstAsync(board => board.Id == testBoardId, null, "Columns")
+        boardCommandRepository.FirstAsync(board => board.Id == Guid.Empty, null, "Columns")
             .ReturnsForAnyArgs(board);
+
+        cardCommandRepository = Substitute.For<ICommandRepository<Card>>();
 
         unitOfWork = Substitute.For<IUnitOfWork>();
         unitOfWork.CardRepository.Returns(cardCommandRepository);
@@ -71,7 +75,7 @@ public class CardServiceTests
     [Test]
     public async Task FilterAsync_ValidInput_CallsRepository()
     {
-        var result = await cardService.ListAsync(testBoardId);
+        var result = await cardService.ListAsync(Guid.Empty);
 
         Assert.Multiple(() =>
         {

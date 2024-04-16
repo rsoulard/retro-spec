@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace RetroSpec.Api.Controllers;
 
 [Authorize]
-[Route("api/board/{boardId:guid}/[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class CardController(ICardService cardService) : ControllerBase
 {
@@ -21,7 +21,7 @@ public class CardController(ICardService cardService) : ControllerBase
     /// <returns>The newly created card.</returns>
     [SwaggerResponse(StatusCodes.Status201Created, "The card was created successfully.", typeof(CardDTO))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "One or more of the supplied arguments is invalid. See body for deatils.")]
-    [HttpPost]
+    [HttpPost("/api/board/{boardId:guid}/[controller]")]
     public async Task<IActionResult> CreateAsync(Guid boardId, [FromBody]CardCreateDTO newCard)
     {
         var result = await cardService.CreateAsync(boardId, newCard);
@@ -33,7 +33,7 @@ public class CardController(ICardService cardService) : ControllerBase
     /// </summary>
     /// <param name="boardId">The Id of the board to filter cards from.</param>
     /// <returns>A list of cards.</returns>
-    [HttpGet]
+    [HttpGet("/api/board/{boardId:guid}/[controller]")]
     public async Task<IActionResult> ListAsync(Guid boardId)
     {
         var result = await cardService.ListAsync(boardId);

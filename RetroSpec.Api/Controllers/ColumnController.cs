@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace RetroSpec.Api.Controllers;
 
 [Authorize]
-[Route("api/board/{boardId:guid}/[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class ColumnController(IColumnService columnService) : ControllerBase
 {
@@ -21,7 +21,7 @@ public class ColumnController(IColumnService columnService) : ControllerBase
     /// <returns>The newly created column.</returns>
     [SwaggerResponse(StatusCodes.Status201Created, "The column was created successfully.", typeof(ColumnDTO))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "One or more of the supplied arguments is invalid. See body for deatils.")]
-    [HttpPost]
+    [HttpPost("/api/board/{boardId:guid}/[controller]")]
     public async Task<IActionResult> CreateAsync(Guid boardId, [FromBody] ColumnCreateDTO newColumn)
     {
         var result = await columnService.CreateAsync(boardId, newColumn);

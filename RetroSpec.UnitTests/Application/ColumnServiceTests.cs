@@ -3,6 +3,7 @@ using RetroSpec.Application.Abstractions;
 using RetroSpec.Application.DomainServices;
 using RetroSpec.Application.DTOs;
 using RetroSpec.Core.BoardModels;
+using RetroSpec.Core.OrganizationModels;
 using System.Linq.Expressions;
 
 namespace RetroSpec.UnitTests.Application;
@@ -16,9 +17,13 @@ public class ColumnServiceTests
     [SetUp]
     public void SetUp()
     {
+        var organization = Organization.Create("Organization");
+        var team = organization.CreateTeam("Team");
+        var board = team.CreateBoard("Board");
+
         boardCommandRepository = Substitute.For<ICommandRepository<Board>>();
         boardCommandRepository.FirstAsync(board => board.Id == Guid.Empty, null, "Columns")
-            .ReturnsForAnyArgs(Board.Create("Test"));
+            .ReturnsForAnyArgs(team.CreateBoard("Test"));
 
         unitOfWork = Substitute.For<IUnitOfWork>();
         unitOfWork.BoardRepository.Returns(boardCommandRepository);

@@ -3,12 +3,15 @@ using RetroSpec.Application.Abstractions;
 using RetroSpec.Application.DomainServices;
 using RetroSpec.Application.DTOs;
 using RetroSpec.Core.BoardModels;
+using RetroSpec.Core.OrganizationModels;
+using RetroSpec.Core.TeamModels;
 using System.Linq.Expressions;
 
 namespace RetroSpec.UnitTests.Application
 {
     public class BoardServiceTests
     {
+        private ICommandRepository<Team> teamCommandRepository;
         private ICommandRepository<Board> boardCommandRepository;
         private IUnitOfWork unitOfWork;
         private IBoardQueryRepository boardQueryRepository;
@@ -17,8 +20,17 @@ namespace RetroSpec.UnitTests.Application
         [SetUp]
         public void SetUp()
         {
+            var organization = Organization.Create("Organization");
+            var team = organization.CreateTeam("Team");
+
+            teamCommandRepository = Substitute.For<ICommandRepository<Team>>();
+            teamCommandRepository.FirstAsync(team => team.Id == Guid.Empty)
+                .ReturnsForAnyArgs(team);
+
             boardCommandRepository = Substitute.For<ICommandRepository<Board>>();
+
             unitOfWork = Substitute.For<IUnitOfWork>();
+            unitOfWork.TeamRepository.Returns(teamCommandRepository);
             unitOfWork.BoardRepository.Returns(boardCommandRepository);
 
             boardQueryRepository = Substitute.For<IBoardQueryRepository>();
@@ -48,10 +60,13 @@ namespace RetroSpec.UnitTests.Application
                 Name = "Test"
             };
 
-            var result = await boardService.CreateAsync(newBoard);
+            var result = await boardService.CreateAsync(Guid.Empty, newBoard);
 
             Assert.Multiple(() =>
             {
+                teamCommandRepository.Received()
+                    .FirstAsync(Arg.Any<Expression<Func<Team, bool>>>());
+                
                 boardCommandRepository.Received()
                     .AddAsync(Arg.Is<Board>(board => board.Id != Guid.Empty && board.Name == "Test"));
 
@@ -65,6 +80,7 @@ namespace RetroSpec.UnitTests.Application
                 Assert.That(result.Id, Is.Not.EqualTo(default));
                 Assert.That(result.Columns, Has.None.Count);
                 Assert.That(result.Name, Is.EqualTo("Test"));
+                
             });
         }
 

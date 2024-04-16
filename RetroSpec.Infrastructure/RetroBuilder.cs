@@ -20,6 +20,13 @@ public class RetroBuilder
     public RetroBuilder(IServiceCollection services)
     {
         Services = services;
+        AddManagement();
+    }
+
+    private void AddManagement()
+    {
+        Services.AddScoped<IOrganizationService, OrganizationService>();
+        Services.AddScoped<ITeamService, TeamService>();
     }
 
     public RetroBuilder AddDatabase(Action<DbContextOptionsBuilder> options)

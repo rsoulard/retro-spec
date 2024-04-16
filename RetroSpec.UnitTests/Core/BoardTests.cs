@@ -1,26 +1,23 @@
-﻿using RetroSpec.Core.BoardModels;
+﻿using RetroSpec.Core.OrganizationModels;
+using RetroSpec.Core.TeamModels;
 
 namespace RetroSpec.UnitTests.Core;
 
 public class BoardTests
 {
-    [Test]
-    public void Create_ValidInput_ReturnsCreated()
-    {
-        var result = Board.Create("Test");
+    private Team team;
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Id, Is.Not.EqualTo(default));
-            Assert.That(result.Name, Is.EqualTo("Test"));
-        });
+    [SetUp]
+    public void SetUp()
+    {
+        var organization = Organization.Create("Organization");
+        team = organization.CreateTeam("Team");
     }
 
     [Test]
     public void AddColumn_ValidInput_ReturnsCreated()
     {
-        var board = Board.Create("Test");
+        var board = team.CreateBoard("Board");
 
         var result = board.AddColumn("Test");
 
@@ -35,7 +32,7 @@ public class BoardTests
     [Test]
     public void AddColumn_ExistingColumnWithValidInput_ReturnsCreatedWithCorrectId()
     {
-        var board = Board.Create("Test");
+        var board = team.CreateBoard("Board");
         var column1 = board.AddColumn("Test1");
 
         var result = board.AddColumn("Test2");
@@ -51,7 +48,7 @@ public class BoardTests
     [Test]
     public void CreateCard_ValidInput_ReturnsCreated()
     {
-        var board = Board.Create("Test");
+        var board = team.CreateBoard("Board");
         var column = board.AddColumn("Test");
 
         var result = board.CreateCard(0, "Test");

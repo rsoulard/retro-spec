@@ -1,6 +1,5 @@
 ﻿using RetroSpec.Application.Abstractions;
 using RetroSpec.Application.DTOs;
-using RetroSpec.Core.BoardModels;
 
 namespace RetroSpec.Application.DomainServices;
 
@@ -9,13 +8,15 @@ public class BoardService(IUnitOfWork unitOfWork, IBoardQueryRepository boardQue
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IBoardQueryRepository boardQueryRepository = boardQueryRepository;
 
-    public async Task<BoardDTO> CreateAsync(BoardCreateDTO newBoard)
+    public async Task<BoardDTO> CreateAsync(Guid teamId, BoardCreateDTO newBoard)
     {
         try
         {
+            var team = await unitOfWork.TeamRepository.FirstAsync(team => team.Id == teamId);
+
             await unitOfWork.BeginTransactionAsync();
 
-            var board = Board.Create(newBoard.Name);
+            var board = team.CreateBoard(newBoard.Name);
             await unitOfWork.BoardRepository.AddAsync(board);
             await unitOfWork.SaveChangesAsync();
 
