@@ -20,7 +20,7 @@ public class CardController(ICardService cardService) : ControllerBase
     /// <param name="newCard">Parameters for creating a card.</param>
     /// <returns>The newly created card.</returns>
     [SwaggerResponse(StatusCodes.Status201Created, "The card was created successfully.", typeof(CardDTO))]
-    [SwaggerResponse(StatusCodes.Status400BadRequest, "One or more of the supplied arguments is invalid. See body for deatils.")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "One or more of the supplied arguments is invalid. See body for details.")]
     [HttpPost("/api/board/{boardId:guid}/[controller]")]
     public async Task<IActionResult> CreateAsync(Guid boardId, [FromBody]CardCreateDTO newCard)
     {
