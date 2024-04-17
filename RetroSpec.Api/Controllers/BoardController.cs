@@ -41,4 +41,17 @@ public class BoardController(IBoardService boardService) : ControllerBase
         var result = await boardService.RetrieveAsync(id);
         return result is null ? NotFound() : Ok(result);
     }
+
+    /// <summary>
+    /// List all boards for a team.
+    /// </summary>
+    /// <param name="teamId">The ID of the team to filter boards from.</param>
+    /// <returns>A list of boards.</returns>
+    [SwaggerResponse(StatusCodes.Status200OK, "The boards were retrieved successfully.", typeof(IReadOnlyCollection<BoardListDTO>))]
+    [HttpGet("/api/team/{teamId:guid}/[controller]")]
+    public async Task<IActionResult> ListAsync(Guid teamId)
+    {
+        var result = await boardService.ListAsync(teamId);
+        return Ok(result);
+    }
 }

@@ -25,5 +25,19 @@ namespace RetroSpec.Api.Controllers
             var result = await teamService.CreateAsync(organizationId, newTeam);
             return Created(new Uri(result.Id.ToString(), UriKind.Relative), result);
         }
+
+        /// <summary>
+        /// Retrieve a team by its Id.
+        /// </summary>
+        /// <param name="id">The Id of the team to retrieve.</param>
+        /// <returns>The requested team.</returns>
+        [SwaggerResponse(StatusCodes.Status200OK, "The team was retrieved successfully.", typeof(TeamDTO))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "The team with the provided Id does not exist.")]
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> RetrieveAsync(Guid id)
+        {
+            var result = await teamService.RetrieveAsync(id);
+            return result is null ? NotFound() : Ok(result);
+        }
     }
 }

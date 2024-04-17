@@ -31,6 +31,11 @@ public class BoardService(IUnitOfWork unitOfWork, IBoardQueryRepository boardQue
         }
     }
 
+    public async Task<IReadOnlyCollection<BoardListDTO>> ListAsync(Guid teamId)
+    {
+        return await boardQueryRepository.QueryAsync(board => board.TeamId == teamId);
+    }
+
     public async Task<BoardDTO?> RetrieveAsync(Guid boardId)
     {
         return await boardQueryRepository.FirstOrDefaultAsync(board => board.Id == boardId);

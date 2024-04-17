@@ -33,6 +33,7 @@ public class CardController(ICardService cardService) : ControllerBase
     /// </summary>
     /// <param name="boardId">The Id of the board to filter cards from.</param>
     /// <returns>A list of cards.</returns>
+    [SwaggerResponse(StatusCodes.Status200OK, "The cards were retrieved successfully.", typeof(IReadOnlyCollection<CardDTO>))]
     [HttpGet("/api/board/{boardId:guid}/[controller]")]
     public async Task<IActionResult> ListAsync(Guid boardId)
     {

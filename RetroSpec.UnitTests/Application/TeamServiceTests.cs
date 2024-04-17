@@ -13,6 +13,7 @@ public class TeamServiceTests
     private ICommandRepository<Organization> organizationCommandRepository;
     private ICommandRepository<Team> teamCommandRepository;
     private IUnitOfWork unitOfWork;
+    private ITeamQueryRepository teamQueryRepository;
     private ITeamService teamService;
 
     [SetUp]
@@ -30,7 +31,15 @@ public class TeamServiceTests
         unitOfWork.OrganizationRepository.Returns(organizationCommandRepository);
         unitOfWork.TeamRepository.Returns(teamCommandRepository);
 
-        teamService = new TeamService(unitOfWork);
+        teamQueryRepository = Substitute.For<ITeamQueryRepository>();
+        teamQueryRepository.FirstOrDefaultAsync(team => team.Id == Guid.Empty)
+            .ReturnsForAnyArgs(new TeamDTO()
+            {
+                Id = Guid.Empty,
+                Name = "Test"
+            });
+
+        teamService = new TeamService(unitOfWork, teamQueryRepository);
     }
 
     [Test]
@@ -60,6 +69,22 @@ public class TeamServiceTests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Id, Is.Not.EqualTo(default));
             Assert.That(result.Name, Is.EqualTo("Test"));
+        });
+    }
+
+    [Test]
+    public async Task Retrieve_ValidInput_CallsRepository()
+    {
+        var result = await teamService.RetrieveAsync(Guid.Empty);
+
+        Assert.Multiple(() =>
+        {
+            teamQueryRepository.Received()
+                .FirstOrDefaultAsync(Arg.Any<Expression<Func<Team, bool>>>());
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result?.Id, Is.EqualTo(Guid.Empty));
+            Assert.That(result?.Name, Is.EqualTo("Test"));
         });
     }
 }

@@ -3,9 +3,10 @@ using RetroSpec.Application.DTOs;
 
 namespace RetroSpec.Application.DomainServices;
 
-public class TeamService(IUnitOfWork unitOfWork) : ITeamService
+public class TeamService(IUnitOfWork unitOfWork, ITeamQueryRepository teamQueryRepository) : ITeamService
 {
     private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly ITeamQueryRepository teamQueryRepository = teamQueryRepository;
 
     public async Task<TeamDTO> CreateAsync(Guid organizationId, TeamCreateDTO newTeam)
     {
@@ -29,4 +30,9 @@ public class TeamService(IUnitOfWork unitOfWork) : ITeamService
             throw;
         }
     }
-}
+
+    public async Task<TeamDTO?> RetrieveAsync(Guid id)
+    {
+        return await teamQueryRepository.FirstOrDefaultAsync(team => team.Id == id);
+    }
+ }

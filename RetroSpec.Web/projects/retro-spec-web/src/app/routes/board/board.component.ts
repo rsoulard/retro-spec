@@ -2,13 +2,12 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonComponent, CardComponent, ColumnComponent, IconComponent } from 'retro-spec-components';
 import { BoardDto } from '../../shared/domain/dtos/board.dto';
-import { CardCreateDto } from '../../shared/domain/dtos/card-create.dto';
 import { CardDto } from '../../shared/domain/dtos/card.dto';
+import { ColumnDto } from '../../shared/domain/dtos/column.dto';
 import { BoardService } from '../../shared/domain/services/board.service';
 import { CardService } from '../../shared/domain/services/card.service';
 import { CardCreateComponent } from '../../shared/ui/card-create/card-create.component';
 import { ColumnCreateComponent } from '../../shared/ui/column-create/column-create.component';
-import { ColumnDto } from '../../shared/domain/dtos/column.dto';
 
 @Component({
   selector: 'app-board',
@@ -24,7 +23,7 @@ import { ColumnDto } from '../../shared/domain/dtos/column.dto';
   templateUrl: './board.component.html',
   styleUrl: './board.component.css',
 })
-export class BoardComponent implements OnInit{
+export class BoardComponent implements OnInit {
 
   protected board = signal<BoardDto | undefined>(undefined);
   protected cards = signal<ReadonlyArray<CardDto>>([]);
@@ -41,7 +40,7 @@ export class BoardComponent implements OnInit{
   }
 
   private fetchBoard(id: string) {
-    this.boardService.get(id)
+    this.boardService.retrieve(id)
       .subscribe(response => {
         this.board.set(response);
       });

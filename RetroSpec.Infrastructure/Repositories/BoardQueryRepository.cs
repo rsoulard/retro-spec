@@ -11,6 +11,19 @@ internal class BoardQueryRepository(RetroDbContext retroDbContext) : IBoardQuery
 {
     private readonly RetroDbContext retroDbContext = retroDbContext;
 
+    public async Task<IReadOnlyCollection<BoardListDTO>> QueryAsync(Expression<Func<Board, bool>> predicate)
+    {
+        return await retroDbContext.Set<Board>()
+            .AsNoTracking()
+            .Where(predicate)
+            .Select(board => new BoardListDTO
+            {
+                Id = board.Id,
+                Name = board.Name
+            })
+            .ToArrayAsync();
+    }
+
     public async Task<BoardDTO?> FirstOrDefaultAsync(Expression<Func<Board, bool>> predicate)
     {
         return await retroDbContext.Set<Board>()

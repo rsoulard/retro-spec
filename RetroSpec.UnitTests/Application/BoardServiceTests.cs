@@ -48,6 +48,25 @@ namespace RetroSpec.UnitTests.Application
                         }
                     ]
                 });
+            boardQueryRepository.QueryAsync(board => board.TeamId == Guid.Empty)
+                .ReturnsForAnyArgs(new List<BoardListDTO>()
+                {
+                    new ()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Board 1",
+                    },
+                    new ()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Board 2",
+                    },
+                    new ()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Board 3",
+                    }
+                });
 
             boardService = new BoardService(unitOfWork, boardQueryRepository);
         }
@@ -81,6 +100,21 @@ namespace RetroSpec.UnitTests.Application
                 Assert.That(result.Columns, Has.None.Count);
                 Assert.That(result.Name, Is.EqualTo("Test"));
                 
+            });
+        }
+
+        [Test]
+        public async Task List_ValidInput_CallsRepository()
+        {
+            var result = await boardService.ListAsync(Guid.Empty);
+
+            Assert.Multiple(() =>
+            {
+                boardQueryRepository.Received()
+                    .QueryAsync(Arg.Any<Expression<Func<Board, bool>>>());
+
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result, Has.Count.EqualTo(3));
             });
         }
 

@@ -26,6 +26,8 @@ public class RetroBuilder
     private void AddManagement()
     {
         Services.AddScoped<IOrganizationService, OrganizationService>();
+
+        Services.AddScoped<ITeamQueryRepository, TeamQueryRepository>();
         Services.AddScoped<ITeamService, TeamService>();
     }
 
@@ -40,11 +42,13 @@ public class RetroBuilder
 
     public RetroBuilder AddBoards()
     {
-        Services.TryAddScoped<IBoardService, BoardService>();
         Services.TryAddScoped<IBoardQueryRepository, BoardQueryRepository>();
+        Services.TryAddScoped<IBoardService, BoardService>();
+
         Services.TryAddScoped<IColumnService, ColumnService>();
-        Services.TryAddScoped<ICardService, CardService>();
+
         Services.TryAddScoped<ICardQueryRepository, CardQueryRepository>();
+        Services.TryAddScoped<ICardService, CardService>();
 
         return this;
     }
