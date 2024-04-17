@@ -92,7 +92,8 @@
             "styles": [
               "projects/retro-spec-web/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "karmaConfig": "projects/retro-spec-web/karma.conf.js"
           }
         }
       }

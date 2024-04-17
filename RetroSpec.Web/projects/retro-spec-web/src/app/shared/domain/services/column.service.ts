@@ -10,12 +10,11 @@ import { Observable } from 'rxjs';
 })
 export class ColumnService {
 
-  private baseUrl = `${environment.apiUrl}/board`;
   private controllerUrl = '/column';
 
   constructor(private httpClient: HttpClient) { }
 
   public create(boardId: string, newColumn: ColumnCreateDto) : Observable<ColumnDto> {
-    return this.httpClient.post<ColumnDto>(`${this.baseUrl}/${boardId}${this.controllerUrl}`, newColumn);
+    return this.httpClient.post<ColumnDto>(`${environment.apiUrl}/board/${boardId}${this.controllerUrl}`, newColumn);
   }
 }
