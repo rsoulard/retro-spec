@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BoardComponent } from './board.component';
+import { provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { BoardService } from '../../shared/domain/services/board.service';
 import { CardService } from '../../shared/domain/services/card.service';
-import { provideRouter } from '@angular/router';
-import { RouterTestingHarness } from '@angular/router/testing';
+import { BoardComponent } from './board.component';
 
 describe('BoardComponent', () => {
   let component: BoardComponent;
@@ -13,7 +13,6 @@ describe('BoardComponent', () => {
   let cardListSpy;
 
   beforeEach(async () => {
-
     const boardService = jasmine.createSpyObj('BoardService', [
       'retrieve'
     ]);
@@ -51,12 +50,12 @@ describe('BoardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [BoardComponent],
       providers: [
-        provideRouter([{path: '**', component: BoardComponent}]),
+        provideRouter([{ path: '**', component: BoardComponent }]),
         { provide: BoardService, useValue: boardService },
-        { provide: CardService, useValue: cardService}
+        { provide: CardService, useValue: cardService }
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/', BoardComponent);
@@ -69,5 +68,12 @@ describe('BoardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have board name', () => {
+    const boardHTML: HTMLElement = fixture.nativeElement as HTMLElement;
+
+    const header = boardHTML.querySelector('h1')!;
+    expect(header.textContent).toContain('Test Board');
   });
 });
