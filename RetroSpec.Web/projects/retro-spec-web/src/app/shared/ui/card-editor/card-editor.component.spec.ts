@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardEditorComponent } from './card-editor.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 describe('CardEditorComponent', () => {
   let component: CardEditorComponent;
@@ -14,6 +15,9 @@ describe('CardEditorComponent', () => {
     
     fixture = TestBed.createComponent(CardEditorComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('form', new FormGroup({
+      body: new FormControl('', Validators.required)
+    }));
     fixture.detectChanges();
   });
 

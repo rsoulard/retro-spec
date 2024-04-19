@@ -32,6 +32,8 @@ describe('CardCreateComponent', () => {
 
     fixture = TestBed.createComponent(CardCreateComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('boardId', '00000000-0000-0000-0000-000000000000');
+    fixture.componentRef.setInput('columnId', 0);
     fixture.detectChanges();
   });
 
@@ -45,10 +47,10 @@ describe('CardCreateComponent', () => {
     );
     saveButtonDebug.triggerEventHandler('onClick');
 
-    fixture.whenStable().then(() => {
-      expect(cardServiceSpy.create.calls.count())
-        .withContext('card service create was called once')
-        .toBe(1);
-    });
+    fixture.detectChanges();
+
+    expect(cardServiceSpy.create.calls.count())
+      .withContext('card service create was called once')
+      .toBe(1);
   });
 });

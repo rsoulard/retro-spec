@@ -37,8 +37,6 @@ export class CardCreateComponent {
       ...this.formRoot.value
     }
 
-    console.log(newCard);
-
     this.cardService.create(this.boardId(), newCard)
       .subscribe(response => {
         this.onCreate.emit(response);
