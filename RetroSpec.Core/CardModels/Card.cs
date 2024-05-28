@@ -19,4 +19,9 @@ public class Card : EntityBase<Guid>, IAggregateRoot
     {
         return new(Guid.NewGuid(), boardId, columnId, body);
     }
+
+    internal void MoveTo(int columnId)
+    {
+        ColumnId = columnId;
+    }
 }

@@ -40,4 +40,17 @@ public class CardController(ICardService cardService) : ControllerBase
         var result = await cardService.ListAsync(boardId);
         return Ok(result);
     }
+
+    /// <summary>
+    /// Move a card to another column in the board.
+    /// </summary>
+    /// <param name="cardId">The Id of the card to move.</param>
+    /// <param name="cardMove">The card move parameters.</param>
+    [SwaggerResponse(StatusCodes.Status200OK, "The card was moved successfully.")]
+    [HttpPost("{cardId:guid}/move")]
+    public async Task<IActionResult> MoveAsync(Guid cardId, [FromBody]CardMoveDTO cardMove)
+    {
+        await cardService.MoveAsync(cardId, cardMove);
+        return Ok();
+    }
 }

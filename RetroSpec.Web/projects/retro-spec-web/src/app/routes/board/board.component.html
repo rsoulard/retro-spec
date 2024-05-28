@@ -4,40 +4,47 @@
   </div>
   <div class="flex flex-row gap-4">
     @for (column of board()?.columns; track column.id) {
-    <retro-column>
-      <div>
-        <h1 class="p-3 text-xl font-semibold">{{column.name}}</h1>
+    <retro-droppable class="rounded-lg bg-slate-300" dataFormat="text/plain" (onDrop)="handleCardDropped(column.id, $event)">
+      <div class="p-2 grid grid-cols-1 gap-3 min-w-56">
+        <div>
+          <h1 class="p-3 text-xl font-semibold">{{column.name}}</h1>
+        </div>
+
+        @if (newCardColumnId() === column.id)
+        {
+        <retro-card>
+          <app-card-create [boardId]="board()!.id" [columnId]="column.id" (onCreate)="handleCardCreated($event)" (onCancel)="handleCardCreateCancelled()"></app-card-create>
+        </retro-card>
+        }
+        @else
+        {
+        <retro-button iconName="add" title="New Card" (onClick)="handleNewCard(column.id)"></retro-button>
+        }
+
+        @for (card of getCardsForColumn(column.id); track card.id)
+        {
+        <retro-draggable dataFormat="text/plain" [data]="card.id">
+          <retro-card>
+            {{card.body}}
+          </retro-card>
+        </retro-draggable>
+        }
+
       </div>
-
-      @if (newCardColumnId() === column.id)
-      {
-      <retro-card>
-        <app-card-create [boardId]="board()!.id" [columnId]="column.id" (onCreate)="handleCardCreated($event)" (onCancel)="handleCardCreateCancelled()"></app-card-create>
-      </retro-card>
-      }
-      @else
-      {
-      <retro-button iconName="add" title="New Card" (onClick)="handleNewCard(column.id)"></retro-button>
-      }
-
-      @for (card of getCardsForColumn(column.id); track card.id)
-      {
-      <retro-card>
-        {{card.body}}
-      </retro-card>
-      }
-    </retro-column>
+    </retro-droppable>
     }
 
     @if (showNewColumnForm())
     {
-      <retro-column>
+    <div class="rounded-lg bg-slate-300">
+      <div class=" p-2 grid grid-cols-1 gap-3 min-w-56">
         <app-column-create [boardId]="board()!.id" (onCreate)="handleColumnCreated($event)" (onCancel)="handleColumnCreateCancelled()"></app-column-create>
-      </retro-column>
+      </div>
+    </div>
     }
     @else
     {
-      <retro-button iconName="add" (onClick)="handleNewColumn()"></retro-button>
+    <retro-button iconName="add" (onClick)="handleNewColumn()"></retro-button>
     }
   </div>
 </div>

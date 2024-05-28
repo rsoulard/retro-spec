@@ -75,4 +75,19 @@ describe('CardService', () => {
       mockRequest.flush(mockCards);
     }
   ));
+
+  it('should call move endoint', inject(
+    [HttpTestingController, CardService],
+    (mockHttp: HttpTestingController, cardService: CardService) => {
+      cardService.move('00000000-0000-0000-0000-000000000000', {
+        columnId: 1
+      })
+        .subscribe();
+
+      const mockRequest = mockHttp.expectOne(`${environment.apiUrl}/card/00000000-0000-0000-0000-000000000000/move`);
+      expect(mockRequest.cancelled).toBeFalsy();
+      expect(mockRequest.request.method).toEqual('POST');
+      mockRequest.flush("");
+    }
+  ));
 });

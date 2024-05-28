@@ -49,7 +49,7 @@ public class BoardTests
     public void CreateCard_ValidInput_ReturnsCreated()
     {
         var board = team.CreateBoard("Board");
-        var column = board.AddColumn("Test");
+        board.AddColumn("Test");
 
         var result = board.CreateCard(0, "Test");
 
@@ -61,5 +61,37 @@ public class BoardTests
             Assert.That(result.ColumnId, Is.EqualTo(0));
             Assert.That(result.Body, Is.EqualTo("Test"));
         });
+    }
+
+    [Test]
+    public void CreateCard_InvalidColumnId_ThrowsException()
+    {
+        var board = team.CreateBoard("Board");
+        board.AddColumn("Test");
+
+        Assert.Throws<Exception>(() => board.CreateCard(int.MaxValue, "Test"));
+    }
+
+    [Test]
+    public void MoveCard_ValidInput_UpdatesCardColumnId()
+    {
+        var board = team.CreateBoard("Board");
+        board.AddColumn("Column1");
+        board.AddColumn("Column2");
+        var card = board.CreateCard(0, "Test");
+
+        board.MoveCard(card, 1);
+
+        Assert.That(card.ColumnId, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void MoveCard_InvalidColumnId_ThrowsException()
+    {
+        var board = team.CreateBoard("Board");
+        board.AddColumn("Test");
+        var card = board.CreateCard(0, "Test");
+
+        Assert.Throws<Exception>(() => board.MoveCard(card, int.MaxValue));
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ButtonComponent, CardComponent, ColumnComponent, IconComponent } from 'retro-spec-components';
+import { ButtonComponent, CardComponent, DraggableComponent, DroppableComponent, IconComponent } from 'retro-spec-components';
 import { BoardDto } from '../../shared/domain/dtos/board.dto';
 import { CardDto } from '../../shared/domain/dtos/card.dto';
 import { ColumnDto } from '../../shared/domain/dtos/column.dto';
@@ -14,11 +14,12 @@ import { ColumnCreateComponent } from '../../shared/ui/column-create/column-crea
   standalone: true,
   imports: [
     CardComponent,
-    ColumnComponent,
     ButtonComponent,
     IconComponent,
     CardCreateComponent,
-    ColumnCreateComponent
+    ColumnCreateComponent,
+    DraggableComponent,
+    DroppableComponent
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css',
@@ -48,8 +49,8 @@ export class BoardComponent implements OnInit {
 
   private fetchCards(boardId: string) {
     this.cardService.list(boardId)
-      .subscribe(respnse => {
-        this.cards.set(respnse);
+      .subscribe(response => {
+        this.cards.set(response);
       });
   }
 
@@ -81,5 +82,12 @@ export class BoardComponent implements OnInit {
 
   protected handleColumnCreateCancelled() {
     this.showNewColumnForm.set(false);
+  }
+
+  protected handleCardDropped(columnId: number, cardId: any) {
+    cardId = cardId as string;
+
+    this.cardService.move(cardId, { columnId })
+      .subscribe();
   }
 }

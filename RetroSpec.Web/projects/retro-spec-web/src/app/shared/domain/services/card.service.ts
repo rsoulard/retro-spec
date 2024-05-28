@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CardDto } from '../dtos/card.dto';
 import { CardCreateDto } from '../dtos/card-create.dto';
+import { CardMoveDto } from '../dtos/card-move.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,9 @@ export class CardService {
 
   public list(boardId: string): Observable<ReadonlyArray<CardDto>> {
     return this.httpClient.get<ReadonlyArray<CardDto>>(`${this.baseUrl}/${boardId}${this.controllerUrl}`);
+  }
+
+  public move(cardId: string, cardMove: CardMoveDto) {
+    return this.httpClient.post(`${environment.apiUrl}${this.controllerUrl}/${cardId}/move`, cardMove);
   }
 }

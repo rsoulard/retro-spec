@@ -35,11 +35,23 @@ public class Board : EntityBase<Guid>, IAggregateRoot
 
     public Card CreateCard(int columnId, string body)
     {
+        AssertColumnExists(columnId);
+
+        return Card.Create(Id, columnId, body);
+    }
+
+    public void MoveCard(Card card, int columnId)
+    {
+        AssertColumnExists(columnId);
+
+        card.MoveTo(columnId);
+    }
+
+    private void AssertColumnExists(int columnId)
+    {
         if (!columns.Any(column => column.Id == columnId))
         {
             throw new Exception($"Board with id {Id} does not have column with id {columnId}");
         }
-
-        return Card.Create(Id, columnId, body);
     }
 }

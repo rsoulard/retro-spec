@@ -35,4 +35,25 @@ public class CardService(IUnitOfWork unitOfWork, ICardQueryRepository cardQueryR
     {
         return await cardQueryRepository.QueryAsync(card => card.BoardId == boardId);
     }
+
+    public async Task MoveAsync(Guid cardId, CardMoveDTO cardMove)
+    {
+        try
+        {
+            var card = await unitOfWork.CardRepository.FirstAsync(card => card.Id == cardId);
+            var board = await unitOfWork.BoardRepository.FirstAsync(board => board.Id == card.BoardId, includedProperties: "Columns");
+
+            await unitOfWork.BeginTransactionAsync();
+
+            board.MoveCard(card, cardMove.ColumnId);
+            await unitOfWork.SaveChangesAsync();
+
+            await unitOfWork.CommitTransactionAsync();
+        }
+        catch
+        {
+            await unitOfWork.RollbackTransactionAsync();
+            throw;
+        }
+    }
 }
