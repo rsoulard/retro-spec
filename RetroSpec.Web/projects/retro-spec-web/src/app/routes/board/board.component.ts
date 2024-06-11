@@ -87,7 +87,13 @@ export class BoardComponent implements OnInit {
   protected handleCardDropped(columnId: number, cardId: any) {
     cardId = cardId as string;
 
+    this.cards()!
+      .find(card => card.id === cardId)!
+      .columnId = columnId;
+
     this.cardService.move(cardId, { columnId })
-      .subscribe();
+      .subscribe(() => {
+        this.fetchCards(this.board()!.id);
+      });
   }
 }
